@@ -319,6 +319,14 @@ export interface IParsedType extends IHasExtra {
     restrictions(): ITypeFacet[]
 
     /**
+     * returns true if this type is anonimous
+     */
+    isAnonymous(): boolean;
+    /**
+     * returns true if this type is empty
+     */
+    isEmpty(): boolean;
+    /**
      * returns true if this type inherits from object type
      */
     isObject(): boolean
@@ -331,6 +339,10 @@ export interface IParsedType extends IHasExtra {
      */
     isNumber(): boolean
 
+    /**
+     * returns true if this type is builtin
+     */
+    isBuiltin(): boolean;
     /**
      * returns true if this type inherits from boolean type
      */
@@ -391,6 +403,12 @@ export interface IParsedType extends IHasExtra {
      * returns true if this type has recurrent definition;
      */
     isRecurrent(): boolean;
+
+    /**
+     * Straightforward set of components. E.g. for `A|(B|C)` where `A`, `B` and `C`
+     * are not union types the result is `[A, B|C]`
+     */
+    options():IParsedType[]
 }
 
 /**
