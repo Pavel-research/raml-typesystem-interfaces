@@ -1,11 +1,11 @@
-export interface IValidationPath{
+export interface IValidationPath {
     name: string|number
-    child?:IValidationPath
+    child?: IValidationPath
 }
 
 export interface IHasExtra {
-    getExtra(name:string) : any;
-    putExtra(name:string,value:any) : void;
+    getExtra(name: string): any;
+    putExtra(name: string, value: any): void;
 }
 export var REPEAT = "repeat";
 export var PARSE_ERROR = "parseError";
@@ -13,76 +13,76 @@ export var TOP_LEVEL_EXTRA = "topLevel";
 export var DEFINED_IN_TYPES_EXTRA = "definedInTypes";
 export var USER_DEFINED_EXTRA = "USER_DEFINED";
 export var SOURCE_EXTRA = "SOURCE";
-export var SCHEMA_AND_TYPE_EXTRA="SCHEMA";
-export var GLOBAL_EXTRA="GLOBAL";
-export var HAS_FACETS="HAS_FACETS";
-export var HAS_ITEMS="HAS_ITEMS";
+export var SCHEMA_AND_TYPE_EXTRA = "SCHEMA";
+export var GLOBAL_EXTRA = "GLOBAL";
+export var HAS_FACETS = "HAS_FACETS";
+export var HAS_ITEMS = "HAS_ITEMS";
 
 export interface IStatus extends IHasExtra {
-    
+
 
     /**
      * returns true if status does not have errors
      */
-    isOk():boolean
+    isOk(): boolean
 
     /**
      * return true if this status contains a warning
      */
-    isWarning():boolean
+    isWarning(): boolean
     /**
      * return true if this status contains a error
      */
-    isError():boolean
+    isError(): boolean
     /**
      * return true if this status is just information
      */
-    isInfo():boolean
+    isInfo(): boolean
     /**
      * returns human readable message associated with this status
      */
-    getMessage():string
+    getMessage(): string
 
-    setMessage(m:string):void;
+    setMessage(m: string): void;
 
     /**
      * returns an array of nested statuses
      */
-    getSubStatuses():IStatus[]
+    getSubStatuses(): IStatus[]
 
     /**
      * return an object which raised this status
      */
-    getSource():any
+    getSource(): any
 
     /**
      * returns primitive error statuses gathered recurrently, returns warnings to.
      */
-    getErrors():IStatus[];
+    getErrors(): IStatus[];
 
-    getValidationPath():IValidationPath;
+    getValidationPath(): IValidationPath;
 
-    setValidationPath(p:IValidationPath):void;
+    setValidationPath(p: IValidationPath): void;
 
     /**
      * returns path to this status
      */
-    getValidationPathAsString():string;
+    getValidationPathAsString(): string;
 
     /**
      * Unique identifier
      */
-    getCode():string
+    getCode(): string
 
-    setCode(c:string):void;
+    setCode(c: string): void;
 
     getSeverity(): number;
 
-    getInternalRange():RangeObject;
+    getInternalRange(): RangeObject;
 
-    getInternalPath():IValidationPath;
+    getInternalPath(): IValidationPath;
 
-    getFilePath():string;
+    getFilePath(): string;
 }
 
 export enum MetaInformationKind {
@@ -114,60 +114,61 @@ export interface ITypeFacet {
     /**
      * name of the facet
      */
-    facetName():string
+    facetName(): string
 
     /**
      * broadest type to which this facet can be added
      */
-    requiredType():IParsedType
+    requiredType(): IParsedType
 
     /**
      * returns a type to which this facet  belongs
      */
-    owner():IParsedType
+    owner(): IParsedType
 
     /**
      * return true if this facet is inheritable
      */
-    isInheritable():boolean
+    isInheritable(): boolean
 
 
     /**
      * validates if the facet is configured properly
      * @param registry
      */
-    validateSelf(registry:ITypeRegistry):IStatus
+    validateSelf(registry: ITypeRegistry): IStatus
 
     /**
      * returns value associated with the facet
      */
-    value():any
+    value(): any
 
     /**
      * Returns kind of meta-information this instance represents.
      */
-    kind() : MetaInformationKind
+    kind(): MetaInformationKind
 
     /**
      * Annotations applied to the facet
      */
-    annotations():IAnnotation[]
+    annotations(): IAnnotation[]
 }
 
 /**
  * Model of annotation instances applied to types or their facets
  */
-export interface IAnnotation extends ITypeFacet {
+export interface IAnnotation extends ITypeFacet,IAnnotationInstance {
 
     /**
      * Returns owner facet for annotations applied to facets
      */
-    ownerFacet():ITypeFacet
+    ownerFacet(): ITypeFacet
 
     /**
      * Returns owner type for annotations applied to types
      */
-    owner():IParsedType
+    owner(): IParsedType
+
 }
 
 export interface IParsedTypeCollection {
@@ -176,35 +177,35 @@ export interface IParsedTypeCollection {
      * returns a type for a given name
      * @param name
      */
-    getType(name:string):IParsedType
+    getType(name: string): IParsedType
     /**
      * adds a type to collection
      * @param t
      */
-    add(t:IParsedType):void
+    add(t: IParsedType): void
 
     /**
      * adds annotation type
      * @param t
      */
-    addAnnotationType(t:IParsedType):void
+    addAnnotationType(t: IParsedType): void
     /**
      * returns annotation type for a given name
      * @param name
      */
-    getAnnotationType(name:string):IParsedType
+    getAnnotationType(name: string): IParsedType
 
     /**
      * lists the types defined in this collection
      */
-    types():IParsedType[]
+    types(): IParsedType[]
     /**
      * lists annotation types defined in this collection
      */
-    annotationTypes():IParsedType[]
+    annotationTypes(): IParsedType[]
 
-    getTypeRegistry():ITypeRegistry;
-    getAnnotationTypeRegistry():ITypeRegistry;
+    getTypeRegistry(): ITypeRegistry;
+    getAnnotationTypeRegistry(): ITypeRegistry;
 }
 export  interface ITypeRegistry {
 
@@ -212,16 +213,16 @@ export  interface ITypeRegistry {
      * returns a type associated with a given name
      * @param name
      */
-    get(name:string):IParsedType
+    get(name: string): IParsedType
 
     /**
      * list all types stored in this registry
      */
-    types():IParsedType[]
+    types(): IParsedType[]
 }
 
 
-export interface IPropertyInfo{
+export interface IPropertyInfo {
 
     name();
 
@@ -245,11 +246,11 @@ export interface IParsedType extends IHasExtra {
     /**
      * returns  list of directly declared sub types of this type
      */
-    subTypes():IParsedType[]
+    subTypes(): IParsedType[]
     /**
      * returns  list of directly declared super types of this type
      */
-    superTypes():IParsedType[]
+    superTypes(): IParsedType[]
 
     /**
      * name of the type
@@ -260,121 +261,121 @@ export interface IParsedType extends IHasExtra {
      * returns full list of known types which inherit from this type.
      * Note: built-in types does not list their not built in sub types
      */
-    allSubTypes():IParsedType[]
+    allSubTypes(): IParsedType[]
 
 
     /**
      * returns full list of ancestor types
      */
 
-    allSuperTypes():IParsedType[]
+    allSuperTypes(): IParsedType[]
 
 
-    annotations():IAnnotation[]
+    annotations(): IAnnotation[]
 
-    declaredAnnotations():IAnnotation[]
+    declaredAnnotations(): IAnnotation[]
 
 
-    componentType():IParsedType
+    componentType(): IParsedType
 
     properties(): IPropertyInfo[]
 
     declaredProperties(): IPropertyInfo[]
 
-    property(name:string): IPropertyInfo
+    property(name: string): IPropertyInfo
 
     /**
      * validates a potential instance of type and returns a status describing the results of validation
      * @param i
      */
-    validate(i:any,autoClose?:boolean): IStatus
+    validate(i: any, autoClose?: boolean): IStatus
 
-    validateType(reg?:ITypeRegistry):IStatus
+    validateType(reg?: ITypeRegistry): IStatus
 
-    ac(i:any):IParsedType
+    ac(i: any): IParsedType
 
-    canDoAc(i:any):IStatus
+    canDoAc(i: any): IStatus
 
     /**
      * returns all meta information and restrictions associated with the type all inheritable facets from super types are included
      */
-    allFacets():ITypeFacet[]
+    allFacets(): ITypeFacet[]
 
 
     exampleObject(): any
     /**
      * returns  meta information and restrictions associated with the type only declared facets are included
      */
-    declaredFacets():ITypeFacet[]
+    declaredFacets(): ITypeFacet[]
 
     /**
      * returns array of custom facets directly declared on this type
      */
-    customFacets():ITypeFacet[]
+    customFacets(): ITypeFacet[]
 
     /**
      * returns array of custom facets directly declared on this type
      */
-    restrictions():ITypeFacet[]
+    restrictions(): ITypeFacet[]
 
     /**
      * returns true if this type inherits from object type
      */
-    isObject():boolean
+    isObject(): boolean
     /**
      * returns true if this type inherits from string type
      */
-    isString():boolean
+    isString(): boolean
     /**
      * returns true if this type inherits from number type
      */
-    isNumber():boolean
+    isNumber(): boolean
 
     /**
      * returns true if this type inherits from boolean type
      */
-    isBoolean():boolean
+    isBoolean(): boolean
     /**
      * returns true if this type inherits from integer type
      */
-    isInteger():boolean
+    isInteger(): boolean
     /**
      * returns true if this type inherits from one of date related types
      */
-    isDateTime():boolean
+    isDateTime(): boolean
 
     /**
      * returns true if this type inherits from one of date related types
      */
-    isDateOnly():boolean
+    isDateOnly(): boolean
 
     /**
      * returns true if this type inherits from one of date related types
      */
-    isTimeOnly():boolean
+    isTimeOnly(): boolean
 
     /**
      * returns true if this type inherits from one of date related types
      */
-    isDateTimeOnly():boolean
+    isDateTimeOnly(): boolean
     /**
      * returns true if this type inherits from array type
      */
-    isArray():boolean
+    isArray(): boolean
     /**
      * returns true if this type inherits from scalar type
      */
-    isScalar():boolean
+    isScalar(): boolean
 
     /**
      * returns true if this type is a union type
      */
-    isUnion():boolean
+    isUnion(): boolean
 
     /**
      * returns true if this type is an intersection type
      */
-    isIntersection():boolean
+    isIntersection(): boolean
 
     /**
      * returns true if this type inhetits from an unknown type
@@ -384,12 +385,12 @@ export interface IParsedType extends IHasExtra {
     /**
      * return true if this type inherits from a file type
      */
-    isFile():boolean;
+    isFile(): boolean;
 
     /**
      * returns true if this type has recurrent definition;
      */
-    isRecurrent():boolean;
+    isRecurrent(): boolean;
 }
 
 /**
@@ -401,13 +402,13 @@ export interface IDerivedType extends IParsedType {
      * Straightforward set of components. E.g. for `A|(B|C)` where `A`, `B` and `C`
      * are not union types the result is `[A, B|C]`
      */
-    options():IParsedType[];
+    options(): IParsedType[];
 
     /**
      * Expanded set of components. E.g. for `A|(B|C)` where `A`, `B` and `C`
      * are not union types the result is `[A, B, C]`
      */
-    allOptions():IParsedType[];
+    allOptions(): IParsedType[];
 }
 
 /**
@@ -419,21 +420,21 @@ export interface ITypeValidationPlugin {
      * @param t the type to be validated
      * @param reg context type registry
      */
-    process(t:IParsedType, reg:ITypeRegistry):PluginValidationIssue[];
+    process(t: IParsedType, reg: ITypeRegistry): PluginValidationIssue[];
 
     /**
      * String ID of the plugin
      */
-    id():string;
+    id(): string;
 }
 
-declare var global:any
+declare var global: any
 /**
  * Retrieve a list of registered type validation plugins
  */
-export function getTypeValidationPlugins():ITypeValidationPlugin[]{
-    var rv:any = (<any>global).ramlValidation;
-    if(rv) {
+export function getTypeValidationPlugins(): ITypeValidationPlugin[] {
+    var rv: any = (<any>global).ramlValidation;
+    if (rv) {
         var typeValidators = rv.typeValidators;
         if (Array.isArray(typeValidators)) {
             return <ITypeValidationPlugin[]>typeValidators;
@@ -445,30 +446,30 @@ export function getTypeValidationPlugins():ITypeValidationPlugin[]{
 /**
  * Model of annotation instance used as input fo validation plugins
  */
-export interface IAnnotationInstance{
+export interface IAnnotationInstance {
 
     /**
      * Annotation name
      */
-    name():string;
+    name(): string;
 
     /**
      * Annotation value
      */
-    value():any;
+    value(): any;
 
     /**
      * Annotation definition type
      */
-    definition():IParsedType;
+    definition(): IParsedType;
 }
 
-export interface PluginValidationIssue{
+export interface PluginValidationIssue {
 
-    issueCode?:string,
-    message?:string,
-    isWarning?:boolean
-    path?:IValidationPath
+    issueCode?: string,
+    message?: string,
+    isWarning?: boolean
+    path?: IValidationPath
 }
 
 /**
@@ -479,12 +480,12 @@ export interface IAnnotationValidationPlugin {
     /**
      * validate annotated RAML element
      */
-    process(entry:IAnnotatedElement):PluginValidationIssue[];
+    process(entry: IAnnotatedElement): PluginValidationIssue[];
 
     /**
      * String ID of the plugin
      */
-    id():string;
+    id(): string;
 
 }
 
@@ -498,12 +499,12 @@ export interface IAnnotatedElement {
     /**
      * Element kind
      */
-    kind():string;
+    kind(): string;
 
     /**
      * Map view on the annotations applied
      */
-    annotationsMap(): {[key:string]:IAnnotationInstance};
+    annotationsMap(): {[key: string]: IAnnotationInstance};
 
     /**
      * Array view on the annotations applied
@@ -523,16 +524,16 @@ export interface IAnnotatedElement {
     /**
      * The element itself
      */
-    entry():any;
+    entry(): any;
 
 }
 
 /**
  * Retrieve a list of registered type validation plugins
  */
-export function getAnnotationValidationPlugins():IAnnotationValidationPlugin[]{
-    var rv:any = (<any>global).ramlValidation;
-    if(rv) {
+export function getAnnotationValidationPlugins(): IAnnotationValidationPlugin[] {
+    var rv: any = (<any>global).ramlValidation;
+    if (rv) {
         var typesystemAnnotationValidators = rv.typesystemAnnotationValidators;
         if (Array.isArray(typesystemAnnotationValidators)) {
             return <IAnnotationValidationPlugin[]>typesystemAnnotationValidators;
@@ -542,13 +543,13 @@ export function getAnnotationValidationPlugins():IAnnotationValidationPlugin[]{
 }
 
 
-export interface MarkerObject{
+export interface MarkerObject {
     line: number
     column: number
     position: number
 }
 
-export interface RangeObject{
+export interface RangeObject {
     start: MarkerObject,
     end: MarkerObject
 }
