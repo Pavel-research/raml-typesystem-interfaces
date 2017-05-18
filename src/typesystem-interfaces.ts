@@ -220,6 +220,22 @@ export  interface ITypeRegistry {
     types():IParsedType[]
 }
 
+
+export interface IPropertyInfo{
+
+    name();
+
+    required(): boolean
+
+    range(): IParsedType
+
+    declaredAt(): IParsedType
+
+    isPattern(): string
+
+    isAdditional(): boolean
+}
+
 /**
  * parsed representation of the type
  * you should not create instances of this interfaces manually
@@ -252,6 +268,20 @@ export interface IParsedType extends IHasExtra {
      */
 
     allSuperTypes():IParsedType[]
+
+
+    annotations():IAnnotation[]
+
+    declaredAnnotations():IAnnotation[]
+
+
+    componentType():IParsedType
+
+    properties(): IPropertyInfo[]
+
+    declaredProperties(): IPropertyInfo[]
+
+    property(name:string): IPropertyInfo
 
     /**
      * validates a potential instance of type and returns a status describing the results of validation
