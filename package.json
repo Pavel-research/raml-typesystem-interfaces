@@ -1,6 +1,6 @@
 {
   "name": "raml-typesystem-interfaces",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "private": false,
   "scripts": {
     "compile": "rimraf -rf dist/ && ./node_modules/typescript/bin/tsc"

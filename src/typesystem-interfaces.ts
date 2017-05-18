@@ -231,7 +231,7 @@ export interface IPropertyInfo{
 
     declaredAt(): IParsedType
 
-    isPattern(): string
+    isPattern(): boolean
 
     isAdditional(): boolean
 }
