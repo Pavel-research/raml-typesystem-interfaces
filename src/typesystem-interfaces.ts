@@ -257,6 +257,10 @@ export interface IParsedType extends IHasExtra {
      */
     name(): string
 
+    examples(): IExample[]
+
+    allOptions():IParsedType[]
+
     /**
      * returns full list of known types which inherit from this type.
      * Note: built-in types does not list their not built in sub types
@@ -545,6 +549,20 @@ export interface IAnnotatedElement {
     entry(): any;
 
 }
+
+export interface IExample {
+
+    name(): string
+
+    strict(): boolean
+
+    value(): boolean
+    annotationsMap(): {
+        [key: string]: IAnnotation[];
+    };
+    annotations(): IAnnotation[];
+}
+
 
 /**
  * Retrieve a list of registered type validation plugins
