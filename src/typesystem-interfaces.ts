@@ -413,6 +413,8 @@ export interface IParsedType extends IHasExtra {
      * are not union types the result is `[A, B|C]`
      */
     options():IParsedType[]
+
+    cloneWithFilter( x:(y:ITypeFacet,transformed?:IParsedType)=>boolean|ITypeFacet,f?:(t:IParsedType)=>IParsedType):IParsedType;
 }
 
 /**
