@@ -277,6 +277,8 @@ export interface IParsedType extends IHasExtra {
 
     annotations(): IAnnotation[]
 
+    annotation(name: string): any
+
     declaredAnnotations(): IAnnotation[]
 
     registry(): IParsedTypeCollection
