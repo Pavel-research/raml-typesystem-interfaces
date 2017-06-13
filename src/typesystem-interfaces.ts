@@ -279,6 +279,9 @@ export interface IParsedType extends IHasExtra {
 
     declaredAnnotations(): IAnnotation[]
 
+    registry(): IParsedTypeCollection
+
+    isAssignableFrom(t:IParsedType):boolean
 
     componentType(): IParsedType
 
